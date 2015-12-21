@@ -17,7 +17,7 @@ public:
 	}
 
 	~TQueue() {
-		delete[] Queue;
+		//delete[] Queue;
 	}
 
 	TQueue(const TQueue& Q) {
@@ -40,12 +40,16 @@ public:
 	}
 
 	void Push(const T n) {
-		if (End < MaxSize)
-			End++;
+		if (!IsFull()) {
+			if (End < MaxSize)
+				End++;
+			else
+				End = 0;
+			Queue[End] = n;
+			Len++;
+		}
 		else
-			End = 0;
-		Queue[End] = n;
-		Len++;
+			throw - 1;
 	}
 
 	T Pop() {
@@ -61,7 +65,8 @@ public:
 
 	T Top() {
 		if (IsEmpty()) throw - 1;
-		return (T tmp = Queue[Begin]);
+		T tmp = Queue[Begin];
+		return (tmp);
 	}
 
 	void ShowQueue() {
@@ -72,6 +77,12 @@ public:
 			cout << i+1 << " element in queue is: " << Queue[i] << endl;
 		}
 		//cout << typeid(*this).name();
+	}
+
+	T Back() {
+		if (IsEmpty()) throw - 1;
+		T tmp = Queue[End];
+		return (tmp);
 	}
 };
 
